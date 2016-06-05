@@ -5,5 +5,5 @@ from login import urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'login/', include('login.urls')),
+    url(r'', include('login.urls')),
 ]
