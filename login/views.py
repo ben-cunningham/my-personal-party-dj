@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import datetime
 
 def login(request):
-	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2F127.0.0.1%3A8000%2Fcallback%2F&response_type=code'
+	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Flimitless-chamber-26833.herokuapp.com%2Fcallback%2F&response_type=code'
 	print url
 	return redirect(url) 
 
