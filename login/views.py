@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 
-# Create your views here.
+
+def login(request):
+    
+    return redirect('https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=google')
