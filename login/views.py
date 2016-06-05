@@ -8,6 +8,5 @@ def login(request):
 	return redirect(url) 
 
 def app(request):
-	now = datetime.datetime.now()
-	html = "<html><body>It is now %s.</body></html>" % now
-	return HttpResponse(html)
+	print request
+	return HttpResponse()
