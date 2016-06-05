@@ -1,6 +1,8 @@
 {% block content %}
 <h1>{{ section.title }}</h1>
 	{% for playlist in playlists %}
-	    {{ playlist }}
+	    <div>
+	    	{{ playlist }}
+	    </div>
 	{% endfor %}
 {% endblock %}

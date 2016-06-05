@@ -8,7 +8,7 @@ import json
 
 def get_playlists(headers):
 	playlists = requests.get('https://api.spotify.com/v1/me/playlists', headers=headers)
-	return playlists
+	return json.loads(playlists.text)
 
 
 def login(request):
@@ -35,8 +35,7 @@ def app(request):
 		'Authorization': 'Bearer ' + json_data['access_token']
 	}
 	playlists = get_playlists(headers)
-
-	return render(request, 'playlists.html', {'playlists': playlists})
+	return render(request, 'playlists.html', {'playlists': playlists['items'] })
 
 def main(request):
 	return HttpResponse()
