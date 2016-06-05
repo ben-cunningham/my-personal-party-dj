@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 
 import datetime
@@ -31,13 +31,12 @@ def app(request):
 	r = requests.post('https://accounts.spotify.com/api/token', data=data, headers=headers)
 
 	json_data = json.loads(r.text)
-	print json_data
 	headers = {
 		'Authorization': 'Bearer ' + json_data['access_token']
 	}
 	playlists = get_playlists(headers)
 
-	return HttpResponse(playlists)
+	return render(request, 'playlists.html', {'playlists': playlists})
 
 def main(request):
 	return HttpResponse()
