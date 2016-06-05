@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-	url(r'^sms/$', views.sms, name='sms')
+	url(r'^sms/$', views.sms_receive, name='sms')
 ]
