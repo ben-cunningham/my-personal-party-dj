@@ -1,6 +1,4 @@
-venv
 *.pyc
-*.sqlite3
 login/migrations/*
 !login/migrations/__init__.py
 
