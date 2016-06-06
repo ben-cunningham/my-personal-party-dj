@@ -10,7 +10,18 @@ from twilio.twiml import Response
 @require_http_methods(["POST"])
 def sms_receive(request):
 	body = request.POST.get('Body', '')
-	
+	inc_number = request.POST.get('To', '')
+
+	string = "My number is %s" % (inc_number)
+	## GET BODY in form of (request, param, number that was texted)
+	## Based off of phone number, retrieve spotify token in database
+	## Connect to api based on request
+	## Pipe to associated method and execute request with params
+
+	r = Response()
+	r.message(string)
+	return HttpResponse(r.toxml(), content_type='text/xml')
+
 
 # Handles SMS return code
 # @TODO: return spotify return code whether a 
@@ -19,5 +30,5 @@ def sms_receive(request):
 @require_http_methods(["GET"])
 def sms_write(request):
 	r = Response()
-	r.message(body)
+	r.message("Sup")
 	return HttpResponse(r.toxml(), content_type='text/xml')
