@@ -8,7 +8,7 @@ def handle_spotify_request(number, query):
 	user_id = user.spotify_id
 	active_playlist = user.playlist_id
 	if active_playlist is None:
-
+		pass
 	headers = user.generate_header()
 	query = query.replace(' ', '+')
 
