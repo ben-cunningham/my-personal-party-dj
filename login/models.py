@@ -28,12 +28,16 @@ class Profile(models.Model):
 
 
 
-def create_profile(spotify_id):
+def create_profile(spotify_id, headers):
 	number = get_free_number()
 
 	def get_playlist():
+		playlists_response = requests.get('https://api.spotify.com/v1/me/playlists', headers=headers)
+		playlists = json.loads(playlists_response.text)
+		if len(playlists['items']) > 0:
+			return playlists['items']
 		return ""
-
+	
 	profile = Profile.objects.create(
 			phone=number,
 			spotify_id=spotify_id,
