@@ -13,13 +13,27 @@ def get_playlists(headers):
 	return json.loads(playlists.text)
 
 def get_user_id(data):
-	json = json.loads(data.text)
-	return json['id']
+	json_data = json.loads(data.text)
+	return json_data['id']
 
 def login(request):
 	# if request has an auth header
 	# then go call app and redirect to app
 	# else use the url
+
+	if request.COOKIES.get('token'):
+		token = request.COOKIES.get('token')
+		headers = {
+			'Authorization': 'Bearer ' +token
+		}
+		profile = json.loads(requests.get('https://api.spotify.com/v1/me', headers=headers).text)
+		playlists = get_playlists(headers)
+
+		return render(request, 'playlists.html', {
+			'playlists': playlists['items'],
+			'profile': profile,
+		})
+
 	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Ff0f02446.ngrok.io%2Fcallback%2F&response_type=code'
 	return redirect(url) 
 
@@ -47,10 +61,13 @@ def app(request):
 	user_prof = requests.get('https://api.spotify.com/v1/me', headers=headers)
 	profile = create_profile(get_user_id(user_prof))
 
-	return render(request, 'playlists.html', {
+	response = render(request, 'playlists.html', {
 		'playlists': playlists['items'],
 		'profile': profile,
 	})
+
+	response.set_cookie('token', json_data['access_token'])
+	return response
 
 def main(request):
 	return HttpResponse()

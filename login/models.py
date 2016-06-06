@@ -35,7 +35,7 @@ def create_profile(spotify_id):
 		return ""
 
 	profile = Profile.objects.create(
-			phone=number.phone,
+			phone=number,
 			spotify_id=spotify_id,
 			playlist_id=get_playlist() 
 	)
