@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 
+from twill.models import Number
+
 # Create your models here.
 
 """ 
@@ -12,8 +14,9 @@ and a phone attributed to them
 
 
 class Profile(models.Model):
-	user = models.OneToOneField(
-		User, on_delete = models.CASCADE)
-
-	phone = models.CharField(max_length=12)
-	playlist = models.CharField(max_length=100)
+	# user = models.OneToOneField(	
+	#		User, on_delete = models.CASCADE)
+	
+	spotify_id = models.CharField(max_length=100)
+	playlist_id = models.CharField(max_length=100)
+	phone = models.OneToOneField(Number)
