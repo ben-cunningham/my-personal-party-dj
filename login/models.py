@@ -18,6 +18,7 @@ class Profile(models.Model):
 	#		User, on_delete = models.CASCADE)
 	
 	spotify_id = models.CharField(max_length=100)
+	current_token = models.CharField(max_length=200)
 	playlist_id = models.CharField(max_length=100)
 	phone = models.OneToOneField(Number)
 
@@ -31,12 +32,12 @@ def create_profile(spotify_id):
 	number = get_free_number()
 
 	def get_playlist():
-		pass
+		return ""
 
 	profile = Profile.objects.create(
 			phone=number.phone,
 			spotify_id=spotify_id,
-			playlist_id=playlist_id
+			playlist_id=get_playlist() 
 	)
 	profile.save()
 	return profile
