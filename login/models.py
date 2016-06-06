@@ -31,8 +31,7 @@ class Profile(models.Model):
 def create_profile(spotify_id, playlists):
 	number = get_free_number()
 
-
-	def get_playlist():
+	def get_playlist(playlists):
 		if len(playlists) > 0:
 			return playlists[0]
 		return ""
@@ -40,7 +39,7 @@ def create_profile(spotify_id, playlists):
 	profile = Profile.objects.create(
 			phone = number,
 			spotify_id= spotify_id,
-			playlist_id = "" 
+			playlist_id = get_playlist(playlists) 
 	)
 	profile.save()
 	return profile
