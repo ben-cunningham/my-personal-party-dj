@@ -21,6 +21,12 @@ class Profile(models.Model):
 	playlist_id = models.CharField(max_length=100)
 	phone = models.OneToOneField(Number)
 
+	def generate_header(self):
+		headers = {'Authorization': 'Bearer ' + 
+							self.current_token}
+
+
+
 def create_profile(spotify_id):
 	number = get_free_number()
 
