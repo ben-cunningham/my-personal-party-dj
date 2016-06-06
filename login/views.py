@@ -65,7 +65,10 @@ def app(request):
 
 	playlists = get_playlists(headers)
 	user_prof = requests.get('https://api.spotify.com/v1/me', headers=headers)
-	profile = create_profile(get_user_id(user_prof), playlists['items'])
+	profile = create_profile(
+				get_user_id(user_prof), 
+				json_data['access_token'], 
+				playlists['items'])
 
 	response = render(request, 'playlists.html', {
 		'playlists': playlists['items'],
