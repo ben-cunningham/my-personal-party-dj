@@ -57,7 +57,6 @@ def app(request):
 		'Authorization': 'Bearer ' + json_data['access_token']
 	}
 
-	import pdb;pdb.set_trace()
 	playlists = get_playlists(headers)
 	user_prof = requests.get('https://api.spotify.com/v1/me', headers=headers)
 
