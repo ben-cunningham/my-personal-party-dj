@@ -6,7 +6,7 @@ import base64
 import requests
 import json
 
-from models import create_profile
+from models import create_profile, Profile
 
 def get_playlists(headers):
 	playlists = requests.get('https://api.spotify.com/v1/me/playlists', headers=headers)
@@ -26,9 +26,15 @@ def login(request):
 		headers = {
 			'Authorization': 'Bearer ' +token
 		}
-		profile = json.loads(requests.get('https://api.spotify.com/v1/me', headers=headers).text)
-		playlists = get_playlists(headers)
+		spotify_profile = json.loads(requests.get('https://api.spotify.com/v1/me', headers=headers).text)
+		profile = None
+		try:
+			profile = Profile.objects.get(spotify_id=spotify_profile['id'])
+		except:
+			url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Ff0f02446.ngrok.io%2Fcallback%2F&response_type=code'
+			return redirect(url) 
 
+		playlists = get_playlists(headers)
 		return render(request, 'playlists.html', {
 			'playlists': playlists['items'],
 			'profile': profile,
@@ -60,8 +66,7 @@ def app(request):
 	import pdb;pdb.set_trace()
 	playlists = get_playlists(headers)
 	user_prof = requests.get('https://api.spotify.com/v1/me', headers=headers)
-
-	profile = create_profile(get_user_id(user_prof))
+	profile = create_profile(get_user_id(user_prof), playlists['items'])
 
 	response = render(request, 'playlists.html', {
 		'playlists': playlists['items'],
