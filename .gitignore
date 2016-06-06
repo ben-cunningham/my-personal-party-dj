@@ -1,4 +1,6 @@
 *.pyc
 login/migrations/*
 !login/migrations/__init__.py
+twill/migrations/*
 db.sqlite3
+
