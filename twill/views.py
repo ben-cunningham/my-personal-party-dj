@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from twilio.twiml import Response
-from spotify import handle_spotify_request
+from spotify.spotify import handle_spotify_request
 
 
 # Handles SMS being recieved

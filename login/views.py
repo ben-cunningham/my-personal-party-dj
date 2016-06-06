@@ -34,14 +34,14 @@ def login(request):
 			'profile': profile,
 		})
 
-	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Ff0f02446.ngrok.io%2Fcallback%2F&response_type=code'
+	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2F5a92e58e.ngrok.io%2Fcallback%2F&response_type=code'
 	return redirect(url) 
 
 def app(request):
 	code = request.GET.get('code')
 	data = {
 		'code': code,
-		'redirect_uri': 'https://f0f02446.ngrok.io/callback/',
+		'redirect_uri': 'https://5a92e58e.ngrok.io/callback/',
 		'grant_type': 'authorization_code',
 	}
 
@@ -57,8 +57,10 @@ def app(request):
 		'Authorization': 'Bearer ' + json_data['access_token']
 	}
 
+	import pdb;pdb.set_trace()
 	playlists = get_playlists(headers)
 	user_prof = requests.get('https://api.spotify.com/v1/me', headers=headers)
+
 	profile = create_profile(get_user_id(user_prof))
 
 	response = render(request, 'playlists.html', {
