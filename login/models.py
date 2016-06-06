@@ -28,18 +28,19 @@ class Profile(models.Model):
 
 
 
-def create_profile(spotify_id, playlists):
+def create_profile(spotify_id, token, playlists):
 	number = get_free_number()
 
 	def get_playlist(playlists):
 		if len(playlists) > 0:
-			return playlists[0]
+			return playlists[0]['id']
 		return ""
 	
 	profile = Profile.objects.create(
 			phone = number,
 			spotify_id= spotify_id,
-			playlist_id = get_playlist(playlists) 
+			playlist_id = get_playlist(playlists),
+			current_token=token,
 	)
 	profile.save()
 	return profile
