@@ -26,6 +26,7 @@ def sms_receive(request):
 	r.message(string)
 	return HttpResponse(r.toxml(), content_type='text/xml')
 	'''
+	return HttpResponse()
 
 # Handles SMS return code
 # @TODO: return spotify return code whether a 

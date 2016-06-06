@@ -31,7 +31,7 @@ def login(request):
 		try:
 			profile = Profile.objects.get(spotify_id=spotify_profile['id'])
 		except:
-			url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Ff0f02446.ngrok.io%2Fcallback%2F&response_type=code'
+			url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2F5a92e58e.ngrok.io%2Fcallback%2F&response_type=code'
 			return redirect(url) 
 
 		playlists = get_playlists(headers)

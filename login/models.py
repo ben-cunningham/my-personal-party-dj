@@ -31,15 +31,15 @@ class Profile(models.Model):
 def create_profile(spotify_id, playlists):
 	number = get_free_number()
 
-	def get_playlist(playlists):
-		if len(playlists) > 0:
-			return playlists[0]
-		return ""
+	#username = 
+	user_playlists = [p for p in playlists if p['owner']['id'] == spotify_id]
+	selected_playlist = user_playlists[0]['id']
+	assert len(user_playlists) > 0, "User has no playlists they own"
 	
 	profile = Profile.objects.create(
 			phone = number,
 			spotify_id= spotify_id,
-			playlist_id = get_playlist(playlists) 
+			playlist_id = selected_playlist
 	)
 	profile.save()
 	return profile
