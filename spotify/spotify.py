@@ -4,7 +4,12 @@ from login.models import Profile
 import json
 
 def handle_spotify_request(number, query):
-	user = Profile.objects.get(phone=number)
+	number = int(number.split("+")[1])
+	try:
+		user = Profile.objects.get()
+	except StandardError:
+		print "no phones left"
+
 	user_id = user.spotify_id
 	active_playlist = user.playlist_id
 	if active_playlist is None:
@@ -23,21 +28,24 @@ def handle_spotify_request(number, query):
 	req_song_uri = json.loads(
 				return_values.text)['tracks']['items'][0]['uri']
 
-	data = {
-			'uris': req_song_uri
-			}	
+	data = {'uris': [req_song_uri]}
+	uri_string = 'uris=' + req_song_uri
 
-	add_to_playlist_string = 'https://api.spotify.com/v1/users/%s/playlists/%s/tracks' % \
-							(user_id, active_playlist)
+	add_to_playlist_string = 'https://api.spotify.com/v1/users/%s/playlists/%s/tracks?%s' % \
+							(user_id, active_playlist, uri_string)
 
 	# https://api.spotify.com/v1/users/{user_id}/playlists/{playlist_id}/tracks
 	playlist_add = requests.post(
 					add_to_playlist_string,
-					data=data,
+					#data=data,
 					headers=headers)
-
-	import pdb; pdb.set_trace()
+	import pdb;pdb.set_trace()
 	print "Playlist add return code: " + str(playlist_add)
+
+	if playlist_add.status_code == 201:
+		# Return success text
+	else:
+		# Return fail text
 
 
 def test():
