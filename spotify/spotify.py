@@ -36,6 +36,7 @@ def handle_spotify_request(number, query):
 					data=data,
 					headers=headers)
 
+	import pdb; pdb.set_trace()
 	print "Playlist add return code: " + str(playlist_add)
 
 

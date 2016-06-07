@@ -25,7 +25,7 @@ class Profile(models.Model):
 	def generate_header(self):
 		headers = {'Authorization': 'Bearer ' + 
 							self.current_token}
-
+		return headers
 
 
 def create_profile(spotify_id, token, playlists):
