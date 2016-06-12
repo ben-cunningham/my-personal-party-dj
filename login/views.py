@@ -5,7 +5,7 @@ import datetime
 import base64
 import requests
 import json
-
+import config.info as io
 from models import create_profile, Profile
 
 def get_playlists(headers):
@@ -20,7 +20,6 @@ def login(request):
 	# if request has an auth header
 	# then go call app and redirect to app
 	# else use the url
-
 	if request.COOKIES.get('token'):
 		token = request.COOKIES.get('token')
 		headers = {
@@ -31,8 +30,9 @@ def login(request):
 		try:
 			profile = Profile.objects.get(spotify_id=spotify_profile['id'])
 		except:
-			url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Fbae0c29f.ngrok.io%2Fcallback%2F&response_type=code&scope=playlist-read-private%20playlist-modify-private%20playlist-modify-public'
-
+			prefix = 'https://accounts.spotify.com/authorize?client_id=%s&redirect_uri=%s' % (io.CLIENT_ID, io.REDIR_ENCODE)
+			postfix = '&response_type=code&scope=playlist-read-private%20playlist-modify-private%20playlist-modify-public' 
+			url = prefix + postfix
 			return redirect(url) 
 
 		playlists = get_playlists(headers)
@@ -41,24 +41,25 @@ def login(request):
 			'profile': profile,
 		})
 
-	url = 'https://accounts.spotify.com/authorize?client_id=f3ee976a08f14c70bcb93f8bc020e019&redirect_uri=https%3A%2F%2Fbae0c29f.ngrok.io%2Fcallback%2F&response_type=code&scope=playlist-read-private%20playlist-modify-private%20playlist-modify-public'
+	prefix = 'https://accounts.spotify.com/authorize?client_id=%s&redirect_uri=%s' % (io.CLIENT_ID, io.REDIR_ENCODE)
+	postfix = '&response_type=code&scope=playlist-read-private%20playlist-modify-private%20playlist-modify-public' 
+	url = prefix + postfix
 	return redirect(url) 
 
 def app(request):
 	code = request.GET.get('code')
 	data = {
 		'code': code,
-		'redirect_uri': 'https://bae0c29f.ngrok.io/callback/',
+		'redirect_uri': io.REDIR_URL,
 		'grant_type': 'authorization_code',
 	}
 
-	auth_header = 'f3ee976a08f14c70bcb93f8bc020e019' +':' +'84103952ba0f48f88080090c9b1962a2'
+	auth_header = '52ecf64e70884e26b5dd43a03c2dc87c' +':' + '71cddb000fec4f0ba8a668a321ff2bd2'
 	encoded = base64.b64encode(auth_header)
 	headers = {
-		'Authorization': 'Basic ' +encoded
+		'Authorization': 'Basic ' + encoded
 	}
 	r = requests.post('https://accounts.spotify.com/api/token', data=data, headers=headers)
-
 	json_data = json.loads(r.text)
 	headers = {
 		'Authorization': 'Bearer ' + json_data['access_token']

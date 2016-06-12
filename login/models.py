@@ -20,7 +20,7 @@ class Profile(models.Model):
 	spotify_id = models.CharField(max_length=62)
 	current_token = models.CharField(max_length=200)
 	playlist_id = models.CharField(max_length=100)
-	phone = models.OneToOneField(Number)
+	phone = models.ForeignKey(Number)
 
 	def generate_header(self):
 		headers = {'Authorization': 'Bearer ' + 
@@ -35,7 +35,10 @@ def create_profile(spotify_id, token, playlists):
 	selected_playlist = user_playlists[0]['id']
 	assert len(user_playlists) > 0, "User has no playlists they own"
 
-	
+	if Profile.objects.all():
+		Profile.objects.all().delete()
+
+
 	profile = Profile.objects.create(
 			phone=number,
 			spotify_id=spotify_id,

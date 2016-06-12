@@ -32,19 +32,21 @@ def handle_spotify_request(number, query):
 	uri_string = 'uris=' + req_song_uri
 
 	add_to_playlist_string = 'https://api.spotify.com/v1/users/%s/playlists/%s/tracks?%s' % \
-							(user_id, active_playlist, uri_string)
+							 (user_id, active_playlist, uri_string)
 
 	# https://api.spotify.com/v1/users/{user_id}/playlists/{playlist_id}/tracks
 	playlist_add = requests.post(
 					add_to_playlist_string,
 					#data=data,
 					headers=headers)
-	import pdb;pdb.set_trace()
+
 	print "Playlist add return code: " + str(playlist_add)
 
 	if playlist_add.status_code == 201:
+		print "success text"
 		# Return success text
 	else:
+		print "fail text"
 		# Return fail text
 
 
