@@ -1,3 +1,3 @@
 # my-personal-party-dj
 
-## Twilio-powered sms-bot which currates song suggestions to build spotify playlists
+## Twilio-powered sms-bot which curates song suggestions to build spotify playlists
