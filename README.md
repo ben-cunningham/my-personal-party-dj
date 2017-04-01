@@ -1,3 +1,3 @@
 # my-personal-party-dj
 
-## IT'S LIT
+## Twilio-powered sms-bot which currates song suggestions to build spotify playlists
